@@ -95,6 +95,9 @@ machine-$(CONFIG_MACH_MIPS_XBURST)	:= xburst
 board-$(CONFIG_BOARD_RZX50)	:= ritmix-rzx50
 board-$(CONFIG_BOARD_CI20)	:= img-ci20
 
+machine-$(CONFIG_MACH_MIPS_MT7628)	:= mediatek
+board-$(CONFIG_BOARD_VONGER_VOCORE2)	:= vonger-vocore2
+
 machdirs := $(patsubst %,arch/mips/mach-%/,$(machine-y))
 
 ifeq ($(KBUILD_SRC),)
