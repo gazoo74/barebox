@@ -79,6 +79,7 @@ machine-$(CONFIG_MACH_MIPS_ATH79)	:= ath79
 machine-$(CONFIG_MACH_MIPS_BCM47XX)	:= bcm47xx
 machine-$(CONFIG_MACH_MIPS_LOONGSON)	:= loongson
 machine-$(CONFIG_MACH_MIPS_XBURST)	:= xburst
+machine-$(CONFIG_MACH_MIPS_MT7628)	:= mediatek
 machdirs := $(patsubst %,arch/mips/mach-%/,$(machine-y))
 
 ifeq ($(KBUILD_SRC),)
