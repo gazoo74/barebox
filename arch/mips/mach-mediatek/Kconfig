@@ -1,0 +1,15 @@
+if MACH_MIPS_MT7628
+
+config ARCH_TEXT_BASE
+	hex
+	default 0xa0800000
+
+choice
+	prompt "Board type"
+
+config BOARD_VONGER_VOCORE2
+	bool "Vonger VoCore2"
+
+endchoice
+
+endif
