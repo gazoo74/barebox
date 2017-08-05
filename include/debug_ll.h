@@ -65,6 +65,16 @@ static inline void puts_ll(const char * str)
 	}
 }
 
+static inline int getc_ll(void)
+{
+	return GETC_LL();
+}
+
+static inline int tstc_ll(void)
+{
+	return TSTC_LL();
+}
+
 #else
 
 static inline void putc_ll(char value)
@@ -82,6 +92,16 @@ static inline void puthex_ll(unsigned long value)
  */
 static inline void puts_ll(const char * str)
 {
+}
+
+static inline int getc_ll(void)
+{
+	return -1;
+}
+
+static inline int tstc_ll(void)
+{
+	return 0;
 }
 
 #endif
