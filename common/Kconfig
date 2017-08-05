@@ -1181,6 +1181,12 @@ config DEBUG_RPI3_MINI_UART
 	  RaspberryPi 3 board mini UART.
 endchoice
 
+config DEBUG_LL_CONSOLE
+	depends on DEBUG_LL
+	bool "Register Kernel low-level debugging as console"
+	default y
+	default y if !CONSOLE_DRIVER_SERIAL_NS16550
+
 config DEBUG_IMX_UART_PORT
 	int "i.MX Debug UART Port Selection" if DEBUG_IMX1_UART || \
 						DEBUG_IMX21_UART || \
