@@ -53,6 +53,23 @@ static inline void PUTC_LL(char ch)
 	__raw_writeb(ch, (u8 *)DEBUG_LL_UART_ADDR + UART_THR);
 #endif /* CONFIG_DEBUG_LL */
 }
+
+static inline int GETC_LL(void)
+{
+#ifdef CONFIG_DEBUG_LL
+	while (!(__raw_readb((u8 *)DEBUG_LL_UART_ADDR + UART_LSR) & UART_LSR_DR))
+		;
+	return __raw_readb((u8 *)DEBUG_LL_UART_ADDR + UART_RBR);
+#endif /* CONFIG_DEBUG_LL */
+}
+
+static inline int TSTC_LL(void)
+{
+#ifdef CONFIG_DEBUG_LL
+	return __raw_readb((u8 *)DEBUG_LL_UART_ADDR + UART_LSR) & UART_LSR_DR;
+#endif /* CONFIG_DEBUG_LL */
+}
+
 #else /* __ASSEMBLY__ */
 /*
  * Macros for use in assembly language code
