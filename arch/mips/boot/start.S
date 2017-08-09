@@ -23,6 +23,8 @@ EXPORT(_start)
 	mtc0	zero, CP0_WATCHLO
 	mtc0	zero, CP0_WATCHHI
 
+	mips_reset_error_level
+
 	mips_disable_interrupts
 
 	copy_to_link_location _start
