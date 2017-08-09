@@ -154,11 +154,52 @@ copy_loop_exit:
 	.set	pop
 	.endm
 
+	/*
+	 * MIPS32™ Architecture For Programmers Volume III, Revision 0.95
+	 *
+	 * Extracted from page 56:
+	 *
+	 * MIPS32™ Architecture For Programmers
+	 * Volume III: The MIPS32™ Privileged Resource
+	 * Architecture
+	 * Document Number: MD00090
+	 * Revision 0.95
+	 * March 12, 2001
+	 *
+	 * Table 6-15 Status Register Field Descriptions
+	 * Chapter 6.15  Status Register (CP Register 12, Select 0)
+	 *
+	 * Error Level; Set by the processor when a Reset, Soft Reset, NMI or
+	 * Cache Error exception are taken.
+	 * When ERL is set:
+	 * - The processor is running in kernel mode
+	 * - Interrupts are disabled
+	 * - The ERET instruction will use the return address held in ErrorEPC
+	 *   instead of EPC
+	 * - The lower 2^29 bytes of kuseg are treated as an unmapped and
+	 *   uncached region. See Section 4.6 on page 16. This allows main
+	 *   memory to be accessed in the presence of cache errors. The
+	 *   operation of the processor is UNDEFINED if the ERL bit is set while
+	 *   the processor is executing instructions from kuseg.
+	 */
+	.macro	mips_reset_error_level
+	.set	push
+	.set	noreorder
+	mfc0	k0, CP0_STATUS
+	li	k1, ST0_ERL
+	and	k1, k0
+	bne	k1, zero, 1f
+	li	k1, ~(ST0_ERL)
+	and	k0, k1
+	mtc0	k0, CP0_STATUS
+1:	.set	pop
+	.endm
+
 	.macro	mips_disable_interrupts
 	.set	push
 	.set	noreorder
 	mfc0	k0, CP0_STATUS
-	li	k1, ~(ST0_ERL | ST0_IE)
+	li	k1, ~(ST0_IE)
 	and	k0, k1
 	mtc0	k0, CP0_STATUS
 	.set	pop
