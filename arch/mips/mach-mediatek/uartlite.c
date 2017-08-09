@@ -10,24 +10,28 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  */
 
-/** @file
- *  This File contains declaration for early output support
- */
-#ifndef __VOCORE2_DEBUG_LL_H__
-#define __VOCORE2_DEBUG_LL_H__
+#include <common.h>
+#include <init.h>
+#include <board/debug_ll.h>
+#include <platform_data/serial-ns16550.h>
 
-#define MT7628_UARTLITE_CLK	40000000
-#define MT7628_UARTLITE1_BASE	0x10000c00
-#define MT7628_UARTLITE2_BASE	0x10000d00
-#define MT7628_UARTLITE3_BASE	0x10000e00
+static struct NS16550_plat uartlite_plat = {
+	.clock = MT7628_UARTLITE_CLK,
+	.shift = DEBUG_LL_UART_SHIFT,
+};
 
-#define DEBUG_LL_UART_ADDR	MT7628_UARTLITE3_BASE
-#define DEBUG_LL_UART_SHIFT	2
-#define DEBUG_LL_UART_DIVISOR   (MT7628_UARTLITE_CLK / 16 / CONFIG_BAUDRATE)
+static int mt7828_uartlite_init(void)
+{
+	struct device_d *dev;
 
-#endif /* __VOCORE2_DEBUG_LL_H__ */
+	dev = add_ns16550_device(DEVICE_ID_DYNAMIC, DEBUG_LL_UART_ADDR, 0xf,
+				 IORESOURCE_MEM | IORESOURCE_MEM_8BIT,
+				 &uartlite_plat);
+	return 0;
+}
+console_initcall(mt7828_uartlite_init);
