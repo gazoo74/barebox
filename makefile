@@ -69,6 +69,24 @@ help:
 		    -e 's,^ *0x00000000\([0-9a-f]*\) *start_barebox$$,     md.b 0x\1 0x100,p' \
 		    barebox.map; \
 	fi
+	@if [ -e arch/mips/pbl/zbarebox.map ]; then \
+		echo " - pbl_main_entry:"; \
+		sed -n \
+		    -e '/^ .text_head_entry/{n;s,^ *0x00000000\([0-9a-f]*\) .*$$,     tftp 0x\1 zbarebox.bin; go 0x\1,p}' \
+		    -e 's,^ *0x00000000\([0-9a-f]*\) *pbl_main_entry$$,     go 0x\1,p' \
+		    arch/mips/pbl/zbarebox.map; \
+		sed -n \
+		    -e 's,^ *0x00000000\([0-9a-f]*\) *pbl_main_entry$$,     md.b 0x\1 0x100,p' \
+		    arch/mips/pbl/zbarebox.map; \
+		echo " - pbl_start:"; \
+		sed -n \
+		    -e '/^ .text_head_entry/{n;s,^ *0x00000000\([0-9a-f]*\) .*$$,     tftp 0x\1 zbarebox.bin; go 0x\1,p}' \
+		    -e 's,^ *0x00000000\([0-9a-f]*\) *pbl_start$$,     go 0x\1,p' \
+		    arch/mips/pbl/zbarebox.map; \
+		sed -n \
+		    -e 's,^ *0x00000000\([0-9a-f]*\) *pbl_start$$,     md.b 0x\1 0x100,p' \
+		    arch/mips/pbl/zbarebox.map; \
+	fi
 	@echo ""
 	@echo "Host:"
 	@echo " - Network:"
@@ -102,9 +120,12 @@ picocom-%:
 
 deploy-%:
 	install -m 755 barebox.bin barebox.uimage /srv/$*/
+	if [ -e arch/mips/pbl/zbarebox.bin ]; then \
+		install -m 755 arch/mips/pbl/zbarebox.bin /srv/$*/; \
+	fi
 
 undeploy-%:
-	rm -f /srv/$*/barebox.bin /srv/$*/barebox.uimage
+	rm -f /srv/$*/barebox.bin /srv/$*/barebox.uimage /srv/$*/zbarebox.bin
 
 %:
 	$(MAKE) -f Makefile $@
