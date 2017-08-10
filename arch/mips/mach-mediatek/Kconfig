@@ -9,6 +9,9 @@ choice
 
 config BOARD_VONGER_VOCORE2
 	bool "Vonger VoCore2"
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select OFDEVICE
 
 endchoice
 

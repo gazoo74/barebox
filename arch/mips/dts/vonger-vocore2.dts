@@ -1,0 +1,6 @@
+/dts-v1/;
+
+/ {
+	compatible = "vocore,vocore2", "ralink,mt7628a-soc";
+	model = "VoCore2";
+};
