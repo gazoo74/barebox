@@ -13,9 +13,9 @@ EXPORT_SYMBOL(release_string);
 #ifdef CONFIG_BANNER
 void barebox_banner (void)
 {
-	printf("\n\n");
+	if (6 <= barebox_loglevel) printf("\n\n");
 	pr_info("%s", version_string);
-	printf("\n\n");
+	if (6 <= barebox_loglevel) printf("\n\n");
 	pr_info("Board: %s\n", barebox_get_model());
 }
 #endif
