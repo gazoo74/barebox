@@ -23,6 +23,13 @@ config SYS_SUPPORTS_LITTLE_ENDIAN
 config CSRC_R4K_LIB
 	bool
 
+if CSRC_R4K_LIB
+
+config CSRC_R4K_HPT_FREQUENCY
+	int
+	default 200000000
+endif
+
 config GENERIC_LINKER_SCRIPT
 	bool
 	default y
