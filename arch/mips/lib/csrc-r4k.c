@@ -39,12 +39,9 @@ static struct clocksource cs = {
 
 static int clocksource_init(void)
 {
-	unsigned int mips_hpt_frequency;
+	unsigned int mips_hpt_frequency = CONFIG_CSRC_R4K_HPT_FREQUENCY/2;
 	struct device_node *np;
 	struct clk *clk;
-
-	/* default rate: 100 MHz */
-	mips_hpt_frequency = 100000000;
 
 	if (IS_ENABLED(CONFIG_OFTREE)) {
 		np = of_get_cpu_node(0, NULL);
