@@ -9,7 +9,7 @@ CROSS_COMPILE = mipsel-unknown-linux-gnu-
 export ARCH CROSS_COMPILE
 
 .PHONY: all
-all: barebox.bin barebox.uimage
+all: barebox.bin
 
 deploy-tftp undeploy-tftp:
 
@@ -100,10 +100,11 @@ picocom-%:
 	picocom -b 115200 /dev/tty$*
 
 deploy-%:
-	install -m 755 barebox.bin barebox.uimage /srv/$*/
-	if [ -e arch/mips/pbl/zbarebox.bin ]; then \
-		install -m 755 arch/mips/pbl/zbarebox.bin /srv/$*/; \
-	fi
+	for file in barebox.bin barebox-flash-image barebox.uimage arch/mips/pbl/zbarebox.bin; do \
+		if [ -e "$$file" ]; then \
+			install -m 755 "$$file" /srv/$*/; \
+		fi \
+	done
 
 undeploy-%:
 	rm -f /srv/$*/barebox.bin /srv/$*/barebox.uimage /srv/$*/zbarebox.bin
