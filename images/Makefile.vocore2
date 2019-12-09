@@ -1,0 +1,3 @@
+pblb-$(CONFIG_BOARD_VONGER_VOCORE2) += start_vonger_vocore2
+FILE_barebox-vonger-vocore2.img = start_vonger_vocore2.pblb
+image-$(CONFIG_BOARD_VONGER_VOCORE2) += barebox-vonger-vocore2.img
