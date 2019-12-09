@@ -109,6 +109,7 @@ include $(srctree)/images/Makefile.rockchip
 include $(srctree)/images/Makefile.socfpga
 include $(srctree)/images/Makefile.tegra
 include $(srctree)/images/Makefile.vexpress
+include $(srctree)/images/Makefile.vocore2
 include $(srctree)/images/Makefile.xburst
 include $(srctree)/images/Makefile.at91
 include $(srctree)/images/Makefile.zynqmp
