@@ -16,6 +16,7 @@ EXPORT(_start)
 	mips_barebox_10h
 
 	/* save dtb pointer */
+	li	a0, 0
 	move	s0, a0
 	move	s1, a1
 
